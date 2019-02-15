@@ -14,7 +14,7 @@ A statefull components have logic but functional components just return what is 
 
 1.  Describe state.
 
-State the a variable that can store other varibalbes and be changed
+State the a variable that can store other variables and be changed
 
 1.  Describe props.
 
