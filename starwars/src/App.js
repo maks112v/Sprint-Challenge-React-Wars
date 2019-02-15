@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import './App.css';
 
 import List from './components/List';
+import Pagination from './components/Pagination';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      starwarsChars: []
+      starwarsChars: [],
+      currentPage: 1,
+      charsPerPage: 4,
     };
   }
 
@@ -30,12 +33,30 @@ class App extends Component {
         throw new Error(err);
       });
   };
+  
+
+  pageClickHandler = event => {
+    this.setState({
+      currentPage: Number(event.target.id),
+    });
+  }
 
   render() {
+    const { starwarsChars, currentPage, charsPerPage } = this.state;
+
+    const indexOfLastChars = currentPage * charsPerPage;
+    const indexOfFirstTodo = indexOfLastChars - charsPerPage;
+    const currentChars = starwarsChars.slice(indexOfFirstTodo, indexOfLastChars);
+
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(starwarsChars.length / charsPerPage); i++) {
+      pageNumbers.push(i);
+    }
     return (
       <div className="App">
         <h1 className="Header">React Wars</h1>
-        <List chars={this.state.starwarsChars} />
+        <Pagination pageNumbers={pageNumbers} pageClickHandler={this.pageClickHandler} />
+        <List chars={currentChars} />
       </div>
     );
   }
