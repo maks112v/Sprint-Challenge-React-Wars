@@ -27,6 +27,7 @@ class App extends Component {
         return res.json();
       })
       .then(data => {
+        console.log(data);
         this.setState({ starwarsChars: data.results });
       })
       .catch(err => {
@@ -36,27 +37,28 @@ class App extends Component {
   
 
   pageClickHandler = event => {
-    this.setState({
-      currentPage: Number(event.target.id),
-    });
+    this.getCharacters('https://swapi.co/api/people/?page=' + event.target.id);
+    // this.setState({
+    //   currentPage: Number(event.target.id),
+    // });
   }
 
   render() {
-    const { starwarsChars, currentPage, charsPerPage } = this.state;
+    // const { starwarsChars, currentPage, charsPerPage } = this.state;
 
-    const indexOfLastChars = currentPage * charsPerPage;
-    const indexOfFirstTodo = indexOfLastChars - charsPerPage;
-    const currentChars = starwarsChars.slice(indexOfFirstTodo, indexOfLastChars);
+    // const indexOfLastChars = currentPage * charsPerPage;
+    // const indexOfFirstTodo = indexOfLastChars - charsPerPage;
+    // const currentChars = starwarsChars.slice(indexOfFirstTodo, indexOfLastChars);
 
-    const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(starwarsChars.length / charsPerPage); i++) {
-      pageNumbers.push(i);
-    }
+    // const pageNumbers = [];
+    // for (let i = 1; i <= Math.ceil(starwarsChars.length / charsPerPage); i++) {
+    //   pageNumbers.push(i);
+    // }
     return (
       <div className="App">
         <h1 className="Header">React Wars</h1>
-        <Pagination pageNumbers={pageNumbers} pageClickHandler={this.pageClickHandler} />
-        <List chars={currentChars} />
+        <Pagination pageNumbers={[1,2,3,4,5,6,7,8,9]} pageClickHandler={this.pageClickHandler} />
+        <List chars={this.state.starwarsChars} />
       </div>
     );
   }
